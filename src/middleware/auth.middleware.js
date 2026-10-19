@@ -1,4 +1,4 @@
-import verifyAccessToken from "../utils/auth.utils.js"
+import {verifyAccessToken} from "../utils/auth.utils.js"
 
 
 export const Authenticate=(req,res,next)=>{
