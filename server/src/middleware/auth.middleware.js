@@ -2,7 +2,7 @@ import {verifyAccessToken} from "../utils/auth.utils.js"
 
 
 export const Authenticate=(req,res,next)=>{
-const accessToken= req.headers?.authorization.split(" ")[1]
+const accessToken= req.headers.authorization?.split(" ")[1]
 
 if(!accessToken){
     return res.status(400).json({
@@ -23,15 +23,10 @@ try {
 }
 
 export const authenticateSeller=(req,res,next)=>{
-    const {role}= req.user?.role;
-
-    if(role==="seller"){
-        res.status(200).json({
-            message:"Authorized seller"
-        })
-        next()
+    if(req.user?.role==="seller"){
+        return next()
     }
-    return res.status(404).json({
+    return res.status(403).json({
         message:"Unauthorized, Access Denied "
     })
 }

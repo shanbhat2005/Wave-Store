@@ -87,3 +87,18 @@ res.status(200).json({
 })
 
 }
+
+export const getUsers=async(req,res)=>{
+    const users= await userModel.find({}).select("name email")
+    return res.status(200).json({
+        message:"Users fetched",
+        data:{
+            users: users.map(user=>({
+                name:user.name,
+                email:user.email,
+                id:user._id
+            }))
+        }
+    })
+
+}
