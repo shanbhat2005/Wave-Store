@@ -1,1 +1,23 @@
-@import 'tailwindcss'
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-background: #faf9f7;
+  --color-on-background: #1a1c1b;
+  --color-on-surface: #1a1c1b;
+  --color-on-primary: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-primary: #89351d;
+  --color-primary-container: #a84c32;
+  --color-on-primary-fixed-variant: #7d2c15;
+  --color-secondary: #5f5e5e;
+  --color-tertiary: #355649;
+  --color-outline: #89726c;
+  --color-outline-variant: #dcc1ba;
+
+  --font-headline-sm: 'Bodoni Moda', serif;
+  --font-headline-md: 'Bodoni Moda', serif;
+  --font-label-caps: 'Hanken Grotesk', sans-serif;
+  --font-body-sm: 'Hanken Grotesk', sans-serif;
+  --font-body-md: 'Hanken Grotesk', sans-serif;
+}
