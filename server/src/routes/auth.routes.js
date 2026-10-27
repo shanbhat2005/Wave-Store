@@ -5,8 +5,8 @@ import { validateRequest } from '../validators/validate-request.js'
 import { loginUserValidator, registerUserValidator } from '../validators/user.validator.js'
 const router= express.Router()
 
-router.post("/",registerUserValidator,validateRequest,registerUser)
-router.get("/",loginUserValidator,validateRequest,loginUser)
+router.post("/register",registerUserValidator,validateRequest,registerUser)
+router.post("/login",loginUserValidator,validateRequest,loginUser)
 router.get("/allUsers",Authenticate,getUsers)
 
 export default router;

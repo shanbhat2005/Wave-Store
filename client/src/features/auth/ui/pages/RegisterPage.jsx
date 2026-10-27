@@ -3,7 +3,7 @@ import { useAuthHooks } from '../../hooks/authHooks'
 
 const RegisterPage = () => {
 
-const {navigate}= useAuthHooks()
+const {navigate,register,handleSubmit,errors,handleRegister}= useAuthHooks()
 
   return (
     
@@ -93,7 +93,11 @@ const {navigate}= useAuthHooks()
             </span>
           </div>
 
-          <form className="space-y-4">
+          <form
+            className="space-y-4"
+            noValidate
+            onSubmit={handleSubmit(handleRegister)}
+          >
             <div>
               <label
                 className="mb-1.5 block font-label-caps text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface"
@@ -103,17 +107,31 @@ const {navigate}= useAuthHooks()
               </label>
               <div className="relative">
                 <input
+                  {...register('name', {
+                    required: 'Name is required.',
+                    validate: {
+                      minLength: (value) =>
+                        value.trim().length >= 2 ||
+                        'Name must be at least 2 characters.',
+                      maxLength: (value) =>
+                        value.trim().length <= 15 ||
+                        'Name must be no more than 15 characters.',
+                    },
+                  })}
                   className="w-full rounded-md border border-[#dcc1ba] bg-surface-container-low/60 px-3.5 py-2.5 text-sm text-on-surface transition-all duration-150 placeholder:text-outline/60 focus:border-on-surface focus:bg-white focus:outline-none focus:ring-1 focus:ring-on-surface"
                   id="full_name"
-                  name="fullName"
                   placeholder="Alex Thorne"
-                  required
                   type="text"
                 />
                 <span className="material-symbols-outlined pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[18px] text-outline/70">
                   person
                 </span>
               </div>
+              {errors.name && (
+                <p className="mt-1 font-body-sm text-[12px] text-red-600" role="alert">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -125,17 +143,27 @@ const {navigate}= useAuthHooks()
               </label>
               <div className="relative">
                 <input
+                  {...register('email', {
+                    required: 'Email is required.',
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: 'Enter a valid email address.',
+                    },
+                  })}
                   className="w-full rounded-md border border-[#dcc1ba] bg-surface-container-low/60 px-3.5 py-2.5 text-sm text-on-surface transition-all duration-150 placeholder:text-outline/60 focus:border-on-surface focus:bg-white focus:outline-none focus:ring-1 focus:ring-on-surface"
                   id="email"
-                  name="email"
                   placeholder="alex.thorne@domain.io"
-                  required
                   type="email"
                 />
                 <span className="material-symbols-outlined pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[18px] text-outline/70">
                   mail
                 </span>
               </div>
+              {errors.email && (
+                <p className="mt-1 font-body-sm text-[12px] text-red-600" role="alert">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -152,12 +180,16 @@ const {navigate}= useAuthHooks()
               </div>
               <div className="relative">
                 <input
+                  {...register('password', {
+                    required: 'Password is required.',
+                    minLength: {
+                      value: 8,
+                      message: 'Password must be at least 8 characters.',
+                    },
+                  })}
                   className="w-full rounded-md border border-[#dcc1ba] bg-surface-container-low/60 px-3.5 py-2.5 text-sm text-on-surface transition-all duration-150 placeholder:text-outline/60 focus:border-on-surface focus:bg-white focus:outline-none focus:ring-1 focus:ring-on-surface"
                   id="password"
-                  name="password"
-                  minLength={8}
                   placeholder="••••••••••••"
-                  required
                   type="password"
                 />
                 <button
@@ -170,6 +202,11 @@ const {navigate}= useAuthHooks()
                   </span>
                 </button>
               </div>
+              {errors.password && (
+                <p className="mt-1 font-body-sm text-[12px] text-red-600" role="alert">
+                  {errors.password.message}
+                </p>
+              )}
               <div className="mt-2 grid grid-cols-4 gap-1.5">
                 {[1, 2, 3, 4].map((segment) => (
                   <div
@@ -189,6 +226,7 @@ const {navigate}= useAuthHooks()
               </label>
               <div className="relative">
                 <select
+                  {...register('role')}
                   className="w-full cursor-pointer appearance-none rounded-md border border-[#dcc1ba] bg-surface-container-low/60 px-3.5 py-2.5 pr-10 text-sm text-on-surface transition-all duration-150 focus:border-on-surface focus:bg-white focus:outline-none focus:ring-1 focus:ring-on-surface"
                   defaultValue="Customer"
                   id="account_role"
@@ -216,8 +254,9 @@ const {navigate}= useAuthHooks()
               <label className="group flex cursor-pointer items-start gap-3">
                 <input
                   className="mt-0.5 h-4 w-4 cursor-pointer rounded border-[#dcc1ba] text-on-surface transition-colors focus:ring-0 focus:ring-offset-0"
-                  name="terms"
-                  required
+                  {...register('terms', {
+                    required: 'You must agree to the terms to register.',
+                  })}
                   type="checkbox"
                 />
                 <span className="select-none text-[13px] leading-snug text-secondary group-hover:text-on-surface">
@@ -238,11 +277,16 @@ const {navigate}= useAuthHooks()
                   .
                 </span>
               </label>
+              {errors.terms && (
+                <p className="mt-1 font-body-sm text-[12px] text-red-600" role="alert">
+                  {errors.terms.message}
+                </p>
+              )}
             </div>
 
             <button
               className="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-[#1a1c1b] px-6 py-3.5 font-title-md text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-sm transition-all duration-150 hover:bg-[#2f3130] active:scale-[0.99] sm:text-sm"
-              type="button"
+              type="submit"
             >
               <span>CREATE ACCOUNT</span>
               <span className="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">
@@ -254,13 +298,12 @@ const {navigate}= useAuthHooks()
           <div className="mt-6 border-t border-[#e5e3df] pt-5 text-center">
             <p className="text-[13px] text-secondary">
               Already have an account?{' '}
-              <p
-              onClick={()=> navigate("/")}
-                className="cursor-pointer  ml-1 font-semibold text-on-surface underline decoration-[#dcc1ba] underline-offset-4 transition-colors hover:text-primary"
-                to="/"
+              <span
+                onClick={() => navigate('/')}
+                className="ml-1 cursor-pointer font-semibold text-on-surface underline decoration-[#dcc1ba] underline-offset-4 transition-colors hover:text-primary"
               >
                 Log in
-              </p>
+              </span>
             </p>
           </div>
         </div>

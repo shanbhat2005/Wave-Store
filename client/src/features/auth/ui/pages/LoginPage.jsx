@@ -4,10 +4,7 @@ import { useAuthHooks } from '../../hooks/authHooks'
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false)
-const {navigate}= useAuthHooks();
-  const handleSubmit = (event) => {
-    event.preventDefault()
-  }
+  const { navigate, register, handleSubmit, errors,handleLogin } = useAuthHooks()
 
   return (
     <div className="relative flex min-h-screen flex-col justify-between overflow-x-hidden bg-background text-on-background antialiased selection:bg-primary selection:text-on-primary">
@@ -61,7 +58,11 @@ const {navigate}= useAuthHooks();
               </p>
             </div>
 
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form
+              className="space-y-5"
+              noValidate
+              onSubmit={handleSubmit(handleLogin)}
+            >
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <label
@@ -83,12 +84,22 @@ const {navigate}= useAuthHooks();
                   <input
                     className="w-full rounded-none border border-[#1a1c1b]/30 bg-[#faf9f7] py-3 pl-10 pr-3.5 text-[14px] text-on-surface transition-all placeholder:text-outline/60 focus:border-[#1a1c1b] focus:outline-none focus:ring-1 focus:ring-[#1a1c1b]"
                     id="email"
-                    name="email"
+                    {...register('email', {
+                      required: 'Email is required.',
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: 'Enter a valid email address.',
+                      },
+                    })}
                     placeholder="operator@wavestore.id"
-                    required
                     type="email"
                   />
                 </div>
+                {errors.email && (
+                  <p className="pl-0.5 font-body-sm text-[11px] text-red-600" role="alert">
+                    {errors.email.message}
+                  </p>
+                )}
                 <p className="pl-0.5 font-body-sm text-[11px] text-secondary">
                   Primary communications and drop dispatch updates
                 </p>
@@ -118,9 +129,10 @@ const {navigate}= useAuthHooks();
                   <input
                     className="w-full rounded-none border border-[#1a1c1b]/30 bg-[#faf9f7] py-3 pl-10 pr-10 text-[14px] text-on-surface transition-all placeholder:text-outline/60 focus:border-[#1a1c1b] focus:outline-none focus:ring-1 focus:ring-[#1a1c1b]"
                     id="password"
-                    name="password"
+                    {...register('password', {
+                      required: 'Password is required.',
+                    })}
                     placeholder="••••••••••••"
-                    required
                     type={showPassword ? 'text' : 'password'}
                   />
                   <button
@@ -137,6 +149,11 @@ const {navigate}= useAuthHooks();
                     </span>
                   </button>
                 </div>
+                {errors.password && (
+                  <p className="pl-0.5 font-body-sm text-[11px] text-red-600" role="alert">
+                    {errors.password.message}
+                  </p>
+                )}
                 <p className="pl-0.5 font-body-sm text-[11px] text-secondary">
                   Encrypted with biometric &amp; passkey authentication
                 </p>
@@ -205,12 +222,12 @@ const {navigate}= useAuthHooks();
             <div className="mt-7 border-t border-[#e5e3df] pt-5 text-center">
               <p className="font-body-sm text-[13px] text-secondary">
                 Don&apos;t have an account?
-                <p onClick={()=> navigate("/register")}
-                  className="cursor-pointer  ml-1 font-semibold tracking-wide text-primary underline underline-offset-4 transition-colors hover:text-on-primary-fixed-variant"
-                  to="/register"
+                <span
+                  onClick={() => navigate('/register')}
+                  className="ml-1 cursor-pointer font-semibold tracking-wide text-primary underline underline-offset-4 transition-colors hover:text-on-primary-fixed-variant"
                 >
                   Sign up
-                </p>
+                </span>
               </p>
             </div>
           </div>
