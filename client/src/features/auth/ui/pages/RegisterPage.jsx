@@ -228,12 +228,12 @@ const {navigate,register,handleSubmit,errors,handleRegister}= useAuthHooks()
                 <select
                   {...register('role')}
                   className="w-full cursor-pointer appearance-none rounded-md border border-[#dcc1ba] bg-surface-container-low/60 px-3.5 py-2.5 pr-10 text-sm text-on-surface transition-all duration-150 focus:border-on-surface focus:bg-white focus:outline-none focus:ring-1 focus:ring-on-surface"
-                  defaultValue="Customer"
+                  defaultValue="user"
                   id="account_role"
                   name="role"
                 >
-                  <option value="Customer">Customer</option>
-                  <option value="Seller">Seller</option>
+                  <option value="user">Customer</option>
+                  <option value="seller">Seller</option>
                 </select>
                 <span className="material-symbols-outlined pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[20px] text-outline">
                   expand_more
