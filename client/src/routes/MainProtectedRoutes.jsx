@@ -3,12 +3,16 @@ import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router';
 
 const MainProtectedRoutes = () => {
-  const {isAuthenticated}= useSelector((store)=> store.auth);
+  const { isAuthenticated, isHydrating } = useSelector((state) => state.auth);
 
-   if(!isAuthenticated){
-    return <Navigate to="/" />
+  if (isHydrating) {
+    return <p role="status">Checking your session...</p>;
   }
-  return <Outlet/>
+
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+  return <Outlet />;
 }
 
 export default MainProtectedRoutes

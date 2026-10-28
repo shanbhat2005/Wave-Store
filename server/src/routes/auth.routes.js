@@ -1,6 +1,6 @@
 import express from 'express'
 import { Authenticate } from '../middleware/auth.middleware.js'
-import { getUsers, loginUser, registerUser } from '../controllers/auth.controller.js'
+import { getUsers, loginUser, refresh, registerUser } from '../controllers/auth.controller.js'
 import { validateRequest } from '../validators/validate-request.js'
 import { loginUserValidator, registerUserValidator } from '../validators/user.validator.js'
 const router= express.Router()
@@ -8,5 +8,6 @@ const router= express.Router()
 router.post("/register",registerUserValidator,validateRequest,registerUser)
 router.post("/login",loginUserValidator,validateRequest,loginUser)
 router.get("/allUsers",Authenticate,getUsers)
+router.post("/refresh",refresh)
 
 export default router;

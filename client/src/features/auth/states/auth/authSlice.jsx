@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {loginUserAction, registerUserAction} from "../auth/authActions"
+import {
+    loginUserAction,
+    refreshUserAction,
+    registerUserAction,
+} from "../auth/authActions"
 let authSlice= createSlice({
     name:"auth",
     initialState:{
@@ -8,6 +12,7 @@ let authSlice= createSlice({
         isLoading:false,
         error:null,
         accessToken:null,
+        isHydrating:true,
     },
     reducers:{
 clearError:(state)=>{
@@ -24,7 +29,8 @@ builder.addCase(registerUserAction.pending,(state)=>{
     state.isLoading=false;
     state.isAuthenticated=true;
     state.user=action.payload.user;
-    state.accessToken=action.payload.accessToken
+    state.accessToken=action.payload.accessToken;
+    state.isHydrating=false;
 })
 .addCase(registerUserAction.rejected,(state)=>{
     state.isLoading=false;
@@ -40,11 +46,27 @@ builder.addCase(registerUserAction.pending,(state)=>{
     state.isLoading=false;
     state.user=action.payload.user;
     state.isAuthenticated=true;
-    state.accessToken=action.payload.accessToken
+    state.accessToken=action.payload.accessToken;
+    state.isHydrating=false;
 })
 .addCase(loginUserAction.rejected,(state)=>{
     state.isLoading=false;
     state.error=true;
+})
+.addCase(refreshUserAction.pending,(state)=>{
+    state.isHydrating=true;
+})
+.addCase(refreshUserAction.fulfilled,(state,action)=>{
+    state.isHydrating=false;
+    state.isAuthenticated=true;
+    state.user=action.payload.user;
+    state.accessToken=action.payload.accessToken;
+})
+.addCase(refreshUserAction.rejected,(state)=>{
+    state.isHydrating=false;
+    state.isAuthenticated=false;
+    state.user=null;
+    state.accessToken=null;
 })
 
     }

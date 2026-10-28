@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, registerApi } from "../../api/authApi";
+import { loginApi, refreshApi, registerApi } from "../../api/authApi";
 
 export const loginUserAction=createAsyncThunk('auth/login',
     async(credentials,thunkApi)=>{
@@ -21,3 +21,15 @@ try {
     return thunkApi.rejectWithValue(error.response?.data?.message||"Register failed")
 }
 })
+
+export const refreshUserAction= createAsyncThunk("auth/refresh",
+    async(_,thunkApi)=>{
+try {
+    const response= await refreshApi();
+    return response.data.data;
+} catch (error) {
+    return thunkApi.rejectWithValue(
+        error.response?.data?.message || "Session could not be restored"
+    )
+}
+    })

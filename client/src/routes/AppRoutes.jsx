@@ -8,6 +8,11 @@ import HomePage from "../features/home/ui/HomePage";
 import AuthProtectedRoutes from "./AuthProtectedRoutes";
 import MainProtectedRoutes from "./MainProtectedRoutes";
 
+
+
+
+
+
 const AppRoutes = () => {
   const router = createBrowserRouter([
     {

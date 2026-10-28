@@ -9,3 +9,7 @@ export const loginApi = async (credentials) => {
   const response = await API.post("/auth/login", credentials);
   return response;
 };
+
+export const refreshApi=async()=>{
+return await API.post("/auth/refresh");
+}
