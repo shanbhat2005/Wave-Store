@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router';
 
 const AuthProtectedRoutes = () => {
-  const {isAuthenticated}= useSelector((store)=> store.auth);
+  const {isAuthenticated,isHydrating}= useSelector((store)=> store.auth);
+
+if(isHydrating){
+  return <p role="status">checking your session...</p>
+}
 
   if(isAuthenticated){
     return <Navigate to="/home" />

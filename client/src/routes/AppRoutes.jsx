@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../features/auth/ui/pages/LoginPage";
@@ -7,6 +7,8 @@ import MainLayout from "../layouts/MainLayout";
 import HomePage from "../features/home/ui/HomePage";
 import AuthProtectedRoutes from "./AuthProtectedRoutes";
 import MainProtectedRoutes from "./MainProtectedRoutes";
+import { useDispatch } from "react-redux";
+import { refreshUserAction } from "../features/auth/states/auth/authActions";
 
 
 
@@ -14,6 +16,15 @@ import MainProtectedRoutes from "./MainProtectedRoutes";
 
 
 const AppRoutes = () => {
+
+const dispatch= useDispatch();
+
+useEffect(()=>{
+  dispatch(refreshUserAction())
+},[dispatch])
+
+
+
   const router = createBrowserRouter([
     {
       path: "/",

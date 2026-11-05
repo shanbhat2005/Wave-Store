@@ -12,7 +12,7 @@ let authSlice= createSlice({
         isLoading:false,
         error:null,
         accessToken:null,
-        isHydrating:true,
+        isHydrating:false,
     },
     reducers:{
 clearError:(state)=>{
