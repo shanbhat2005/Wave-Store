@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { useProductHooks } from "../hooks/productHooks";
 
 const products = [
   {
@@ -138,8 +139,16 @@ const products = [
   },
 ];
 
-const HomePage = () => (
-  <div className="flex min-h-screen flex-col bg-[#faf9f7] text-[#111111] antialiased selection:bg-black selection:text-white">
+const HomePage = () => {
+
+const [category, setCategory] = useState(null)
+const {isPending,data,error}= useProductHooks(category)
+
+if(isPending) return <h1>Loading Data...</h1>
+if(error) return <h1> data not found </h1>
+
+  return (
+    <div className="flex min-h-screen flex-col bg-[#faf9f7] text-[#111111] antialiased selection:bg-black selection:text-white">
     <header className="sticky top-0 z-50 w-full border-b border-[#111111]/10 bg-[#faf9f7]/95 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-6 px-6 py-4 md:px-12">
         <div className="flex shrink-0 items-center">
@@ -204,24 +213,28 @@ const HomePage = () => (
               FILTER /
             </span>
             <button
+            onClick={()=> setCategory("All")}
               type="button"
               className="shrink-0 bg-[#111111] px-3 py-1 text-[11px] font-semibold text-[#faf9f7]"
             >
               All
             </button>
             <button
+            onClick={()=> setCategory("Men")}
               type="button"
               className="shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
             >
               Men
             </button>
             <button
+            onClick={()=> setCategory("Women")}
               type="button"
               className="shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
             >
               Women
             </button>
             <button
+            onClick={()=> setCategory("Kids")}
               type="button"
               className="shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
             >
@@ -255,8 +268,8 @@ const HomePage = () => (
       </div>
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductCard key={product.sku} {...product} />
+        {data.map((product) => (
+          <ProductCard key={product._id} {...product} />
         ))}
       </div>
 
@@ -422,7 +435,8 @@ const HomePage = () => (
         </div>
       </div>
     </footer>
-  </div>
-);
+    </div>
+  );
+};
 
 export default HomePage;

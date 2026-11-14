@@ -39,8 +39,17 @@ export const createProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
+
+const {category}= req.query;
+
   try {
-    const products = await productModel.find({});
+const pipeline = [
+{
+  $match: category ? { category } : {},
+},
+];
+
+const products= await productModel.aggregate(pipeline)
 
     res.status(200).json({
       message: "products fetched",
@@ -49,6 +58,7 @@ export const getProducts = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("Failed to fetch products:", error);
     return res.status(500).json({
       message: "products not found or empty",
     });

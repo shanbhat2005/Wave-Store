@@ -2,12 +2,12 @@
 import {useQuery} from '@tanstack/react-query'
 import { getProductsApi } from '../api/productsApi'
 
-export const useProductHooks=()=>{
+export const useProductHooks=(category)=>{
 
 
 let {isPending,data,error}= useQuery({
-    queryKey:['products'],
-    queryFn:getProductsApi,
+    queryKey:['products',category??"all"],
+    queryFn:()=>getProductsApi(category),
     staleTime:5000
 })
 

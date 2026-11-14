@@ -25,6 +25,6 @@ router.post("/",Authenticate,authenticateSeller,upload.array('images',4),(req,re
     }
 },createProductValidator,validateRequest,createProduct);
 router.get("/",getProducts);
-router.get("/:id",getProduct)
+router.get("/:id",getProduct);
 
 export default router
