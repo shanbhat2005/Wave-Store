@@ -12,3 +12,13 @@ try {
     
 }
 }
+
+export const getSingleProductApi=async(id)=>{
+    try {
+        const response= await axios.get(`http://localhost:3000/api/products/${id}`)
+        return response.data.data.product;
+    } catch (error) {
+        console.log('error',error);
+        
+    }
+}

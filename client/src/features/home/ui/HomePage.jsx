@@ -142,6 +142,11 @@ const products = [
 const HomePage = () => {
 
 const [category, setCategory] = useState(null)
+const activeCategory = category ?? "All"
+const categoryButtonClass = (buttonCategory) =>
+  activeCategory === buttonCategory
+    ? "shrink-0 bg-[#111111] px-3 py-1 text-[11px] font-semibold text-[#faf9f7]"
+    : "shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
 const {isPending,data,error}= useProductHooks(category)
 
 if(isPending) return <h1>Loading Data...</h1>
@@ -213,30 +218,30 @@ if(error) return <h1> data not found </h1>
               FILTER /
             </span>
             <button
-            onClick={()=> setCategory("All")}
+            onClick={()=> setCategory(null)}
               type="button"
-              className="shrink-0 bg-[#111111] px-3 py-1 text-[11px] font-semibold text-[#faf9f7]"
+              className={categoryButtonClass("All")}
             >
               All
             </button>
             <button
             onClick={()=> setCategory("Men")}
               type="button"
-              className="shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
+              className={categoryButtonClass("Men")}
             >
               Men
             </button>
             <button
             onClick={()=> setCategory("Women")}
               type="button"
-              className="shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
+              className={categoryButtonClass("Women")}
             >
               Women
             </button>
             <button
             onClick={()=> setCategory("Kids")}
               type="button"
-              className="shrink-0 border border-[#111111]/30 px-3 py-1 text-[11px] font-medium text-[#111111] transition-colors hover:border-[#111111]"
+              className={categoryButtonClass("Kids")}
             >
               Kids
             </button>

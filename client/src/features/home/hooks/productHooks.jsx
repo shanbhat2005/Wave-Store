@@ -1,9 +1,10 @@
 
 import {useQuery} from '@tanstack/react-query'
-import { getProductsApi } from '../api/productsApi'
+import { getProductsApi, getSingleProductApi } from '../api/productsApi'
+import { useNavigate } from 'react-router'
 
 export const useProductHooks=(category)=>{
-
+const navigate= useNavigate()
 
 let {isPending,data,error}= useQuery({
     queryKey:['products',category??"all"],
@@ -11,10 +12,28 @@ let {isPending,data,error}= useQuery({
     staleTime:5000
 })
 
+
+
+
 return {
     isPending,
     data,
-    error
+    error,
+    navigate
+}
+
+}
+
+export const useSingleProducthooks=(id)=>{
+    let {isPending,data,error}=useQuery({
+        queryKey:['product',id],
+        queryFn:()=> getSingleProductApi(id),
+    enabled:Boolean(id),
+    })
+
+
+return {
+    isPending,data,error
 }
 
 }

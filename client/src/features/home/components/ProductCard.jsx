@@ -1,6 +1,7 @@
 import React from "react";
+import { useProductHooks } from "../hooks/productHooks";
 
-const ProductCard = ({ title, description, price, currency, stock, category, images = [] }) => {
+const ProductCard = ({ _id,title, description, price, currency, stock, category, images = [], }) => {
   const firstImage = images[0];
   const amount = typeof price === "object" ? price?.amount : price;
   const currencyCode = currency || (typeof price === "object" ? price?.currency : undefined);
@@ -16,6 +17,8 @@ const ProductCard = ({ title, description, price, currency, stock, category, ima
   const stockColor =
     stock === 0 ? "text-stone-500" : stock <= 5 ? "text-amber-700" : "text-emerald-700";
 
+
+    const {navigate}= useProductHooks();
   return (
     <article className="group flex flex-col justify-between border border-[#111111]/15 bg-white transition-all duration-200 hover:border-[#111111]">
       <div className="relative flex aspect-square items-center justify-center overflow-hidden border-b border-[#111111]/10 bg-[#f4f3f1] p-6">
@@ -30,11 +33,19 @@ const ProductCard = ({ title, description, price, currency, stock, category, ima
           />
         )}
         <button
+        onClick={()=> navigate(`/home/products/${_id}`)} 
           type="button"
           className="absolute inset-x-4 bottom-4 flex items-center justify-center gap-1 bg-[#111111]/90 py-2.5 font-label-caps text-[11px] uppercase tracking-widest text-white opacity-0 transition-opacity group-hover:opacity-100"
         >
-          <span className="material-symbols-outlined text-[16px]">visibility</span>
-          <span>Quick View</span>
+
+          <span
+
+
+           className="material-symbols-outlined text-[16px]">visibility</span>
+          <span
+          
+          >
+            Quick View</span>
         </button>
       </div>
 

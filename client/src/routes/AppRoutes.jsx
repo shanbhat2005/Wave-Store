@@ -9,6 +9,7 @@ import AuthProtectedRoutes from "./AuthProtectedRoutes";
 import MainProtectedRoutes from "./MainProtectedRoutes";
 import { useDispatch } from "react-redux";
 import { refreshUserAction } from "../features/auth/states/auth/authActions";
+import ProductDetailsPage from "../features/home/ui/ProductDetailsPage";
 
 
 
@@ -55,6 +56,10 @@ useEffect(()=>{
           path: "",
           element: <HomePage />,
         },
+        {
+          path:"products/:id",
+          element:<ProductDetailsPage/>
+        }
       ],
      } ]
     },
