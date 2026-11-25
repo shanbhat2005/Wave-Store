@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useSingleProducthooks } from "../hooks/productHooks";
 
 const ProductDetailsPage = () => {
@@ -15,6 +15,16 @@ console.log(data);
 
   return (
     <main className="min-h-screen bg-[#faf9f7] px-6 py-10 text-[#111111] md:px-12 md:py-16">
+      <header className="mx-auto mb-10 w-full max-w-[1200px] border-b border-[#111111]/15 pb-4">
+        <Link
+          aria-label="WaveStore home"
+          className="font-headline-md text-2xl font-black uppercase tracking-[-0.04em] text-[#111111] md:text-3xl"
+          to="/home"
+        >
+          WAVESTORE
+        </Link>
+      </header>
+
       <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
         <div
           aria-label="Product image"
@@ -26,15 +36,23 @@ console.log(data);
         </div>
 
         <section className="flex flex-col gap-6 lg:py-8">
+          <span className="self-start border border-[#111111]/35 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-[#111111]/70">
+            {data.category}
+          </span>
+
           <h1 className="font-headline-md text-3xl font-medium tracking-tight sm:text-4xl">
-            {}
+            {data.title}
           </h1>
 
-          <p className="font-body-md text-xl font-semibold">₹0.00</p>
-
-          <p className="max-w-xl font-body-md text-sm leading-7 text-[#111111]/70 sm:text-base">
-            Product description will appear here.
+          <p className="font-body-md text-xl font-semibold">
+            {data.price.amount} {data.price.currency}
           </p>
+
+          <div className="border-t border-[#111111]/15 pt-5">
+            <p className="max-w-xl font-body-md text-sm leading-7 text-[#111111]/70 sm:text-base">
+              {data.description}
+            </p>
+          </div>
 
           <div className="mt-2 flex flex-col gap-3 sm:flex-row">
             <button

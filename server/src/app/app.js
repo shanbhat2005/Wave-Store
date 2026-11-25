@@ -6,6 +6,7 @@ import productRoutes from "../routes/products.routes.js"
 import paymentRoutes from '../routes/payment.routes.js'
 import morgan from 'morgan'
 import config from '../config/config.js'
+import cartRoutes from '../routes/cart.routes.js'
 const app = express()
 app.use(cors({
     origin: config.CLIENT_ORIGIN,
@@ -19,5 +20,6 @@ app.use(morgan("dev"));
 app.use("/api/products",productRoutes);
 app.use("/api/auth",authRoutes);
 app.use("/api/payments",paymentRoutes)
+app.use("/api/cart",cartRoutes)
 
 export default app;
